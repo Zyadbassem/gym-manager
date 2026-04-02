@@ -1,13 +1,13 @@
 import "dotenv/config";
-import express from "express";
+import express, { Request, Response } from "express";
 import postgres from "postgres";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const sql = postgres(process.env.DATABASE_URL);
+const sql = postgres(process.env.DATABASE_URL!);
 
-app.get("/", async (_, res) => {
+app.get("/", async (_: Request, res: Response) => {
   try {
     const [result] = await sql`SELECT version()`;
     const version = result?.version || "No version found";
