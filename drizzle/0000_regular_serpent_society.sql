@@ -12,6 +12,7 @@ CREATE TABLE "users" (
 	"name" varchar(255) NOT NULL,
 	"age" integer NOT NULL,
 	"email" varchar(255) NOT NULL,
+	"phone" varchar,
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 

@@ -1,38 +1,26 @@
 import "dotenv/config";
-import { drizzle } from "drizzle-orm/neon-http";
-import { eq } from "drizzle-orm";
-import { users as usersTable } from "./db/schema.js";
+import express, { Request, Response } from "express";
+import postgres from "postgres";
 
-const db = drizzle(process.env.DATABASE_URL!);
+const app = express();
+const port = process.env.PORT || 3000;
 
-async function main() {
-  const user: typeof usersTable.$inferInsert = {
-    name: "John",
-    age: 30,
-    email: "john@example.com",
-  };
+const sql = postgres(process.env.DATABASE_URL!);
 
-  await db.insert(usersTable).values(user);
-  console.log("New user created!");
+app.get("/", async (_: Request, res: Response) => {
+  try {
+    const [result] = await sql`SELECT version()`;
+    const version = result?.version || "No version found";
+    res.json({
+      message: "Connection successful!",
+      version: version,
+    });
+  } catch (error) {
+    console.error("Database query failed:", error);
+    res.status(500).json({ error: "Failed to connect to the database." });
+  }
+});
 
-  const allUsers = await db.select().from(usersTable);
-  console.log("Getting all users from the database: ", allUsers);
-  /*
-  const users: {
-    id: number;
-    name: string;
-    age: number;
-    email: string;
-  }[]
-  */
-
-  await db
-    .update(usersTable)
-    .set({
-      age: 31,
-    })
-    .where(eq(usersTable.email, user.email));
-  console.log("User info updated!");
-}
-
-main();
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
