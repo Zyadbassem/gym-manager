@@ -50,6 +50,13 @@
       "when": 1775325893588,
       "tag": "0006_natural_ben_urich",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1776091927872,
+      "tag": "0007_unknown_miss_america",
+      "breakpoints": true
     }
   ]
 }
