@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx --watch src/index.ts",
-    "start": "node dist/index.ts",
+    "dev": "tsx --watch server.ts",
+    "start": "node dist/server.ts",
     "build": "tsc"
   },
   "author": "",

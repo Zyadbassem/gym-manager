@@ -104,5 +104,3 @@ export async function seed() {
     throw error; // re-throw error to be caught by caller
   }
 }
-
-seed();
